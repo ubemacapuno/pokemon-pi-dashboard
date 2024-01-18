@@ -1,6 +1,7 @@
 import './App.css'
 import { useEffect, useState } from 'react'
-import Weather from './components/Weather'
+import WeatherCard from './components/WeatherCard'
+import WeatherIcon from './components/WeatherIcon'
 import type { WeatherData } from './types/weather-types'
 
 export default function App() {
@@ -29,7 +30,14 @@ export default function App() {
 
 	return (
 		<div className="App">
-			{data && data.main ? <Weather weatherData={data} /> : <div>Loading...</div>}
+			{data && data.main ? (
+				<>
+					<WeatherCard weatherData={data} />
+					<WeatherIcon weatherCondition={data.weather[0].main} />
+				</>
+			) : (
+				<div>Loading...</div>
+			)}
 		</div>
 	)
 }
