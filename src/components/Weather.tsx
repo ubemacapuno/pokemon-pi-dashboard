@@ -1,4 +1,4 @@
-import '../index.css'
+import './Weather.css'
 import moment from 'moment'
 
 const WeatherCard = ({ weatherData }) => (
