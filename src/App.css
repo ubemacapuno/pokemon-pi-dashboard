@@ -6,3 +6,15 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.dashboard_container {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	align-items: center;
+	justify-items: center;
+	border: 3px solid var(--line_color);
+	border-radius: var(--border_radius);
+	padding: var(--gap_largest);
+	gap: var(--gap_largest);
+	width: 90vw;
+}

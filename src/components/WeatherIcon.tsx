@@ -1,4 +1,22 @@
 // Paths to Castform images in src/assets/castform_images
+// TODO: Render via the description instead: @see https://openweathermap.org/weather-conditions
+
+/**
+ * Example data shape:
+ * 
+ * {
+		...
+    "weather": [
+        {
+            "id": 803,
+            "main": "Clouds",
+            "description": "broken clouds",
+            "icon": "04d"
+        }
+    ],
+		...
+}
+ */
 const castformImages = {
 	Thunderstorm: '/src/assets/castform_images/thunderstorm.gif',
 	Drizzle: '/src/assets/castform_images/rain.gif',
