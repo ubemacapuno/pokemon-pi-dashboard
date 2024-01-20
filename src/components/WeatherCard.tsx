@@ -1,8 +1,9 @@
 import moment from 'moment'
 import './WeatherCard.css'
 import { convertCelsiusToFahrenheit, toTitleCase } from '../utils/helpers'
+import { WeatherCardProps } from '../types/weather-types'
 
-export default function WeatherCard({ weatherData, currentTime }) {
+export default function WeatherCard({ weatherData, currentTime }: WeatherCardProps) {
 	const formattedTime = moment(currentTime).format('HH:mm')
 	const tempInFahrenheit = convertCelsiusToFahrenheit(weatherData.main.temp)
 	const maxTempInFahrenheit = convertCelsiusToFahrenheit(weatherData.main.temp_max)

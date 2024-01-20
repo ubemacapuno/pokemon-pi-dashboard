@@ -20,7 +20,7 @@ export default function App() {
 			try {
 				const response = await fetch(phoenixCoords)
 				if (!response.ok) {
-					throw new Error(`Error: ${response.status}`)
+					throw { message: `Error: ${response.status}` }
 				}
 				const result = await response.json()
 				setData(result)

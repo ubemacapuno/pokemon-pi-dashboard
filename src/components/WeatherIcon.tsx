@@ -2,13 +2,13 @@
 // TODO: Render via the description instead ? @see https://openweathermap.org/weather-conditions
 
 const castformImages = {
-	Thunderstorm: '/src/assets/castform_images/thunderstorm.gif',
-	Drizzle: '/src/assets/castform_images/rain.gif',
-	Rain: '/src/assets/castform_images/rain.gif',
-	Snow: '/src/assets/castform_images/snow.gif',
-	Clear: '/src/assets/castform_images/clear.gif',
-	Clouds: '/src/assets/castform_images/clouds.gif',
-	Default: '/src/assets/castform_images/default.gif'
+	Thunderstorm: '/castform_images/thunderstorm.gif',
+	Drizzle: '/castform_images/rain.gif',
+	Rain: '/castform_images/rain.gif',
+	Snow: '/castform_images/snow.gif',
+	Clear: '/castform_images/clear.gif',
+	Clouds: '/castform_images/clouds.gif',
+	Default: '/castform_images/default.gif'
 }
 
 export default function WeatherIcon({ weatherCondition }) {
