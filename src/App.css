@@ -12,9 +12,16 @@
 	grid-template-columns: 1fr 2fr;
 	align-items: center;
 	justify-items: center;
+	position: relative;
 	border: 3px solid var(--line_color);
 	border-radius: var(--border_radius);
 	padding: var(--gap_largest);
 	gap: var(--gap_largest);
 	width: 90vw;
+}
+
+.time-of-day-icon {
+	position: absolute;
+	top: 1.2rem;
+	right: 1.2rem;
 }

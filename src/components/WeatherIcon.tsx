@@ -1,22 +1,6 @@
 // Paths to Castform images in src/assets/castform_images
-// TODO: Render via the description instead: @see https://openweathermap.org/weather-conditions
+// TODO: Render via the description instead ? @see https://openweathermap.org/weather-conditions
 
-/**
- * Example data shape:
- * 
- * {
-		...
-    "weather": [
-        {
-            "id": 803,
-            "main": "Clouds",
-            "description": "broken clouds",
-            "icon": "04d"
-        }
-    ],
-		...
-}
- */
 const castformImages = {
 	Thunderstorm: '/src/assets/castform_images/thunderstorm.gif',
 	Drizzle: '/src/assets/castform_images/rain.gif',
@@ -30,5 +14,9 @@ const castformImages = {
 export default function WeatherIcon({ weatherCondition }) {
 	const weatherIcon = castformImages[weatherCondition] || castformImages.Default
 
-	return <img src={weatherIcon} alt="Weather icon" style={{ width: '150px' }} />
+	return (
+		<div className="weather-icon-container">
+			<img src={weatherIcon} alt="Weather icon" style={{ width: '150px' }} />
+		</div>
+	)
 }

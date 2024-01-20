@@ -1,0 +1,10 @@
+.weather-icon-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.weather-icon-container img {
+	width: 150px;
+}

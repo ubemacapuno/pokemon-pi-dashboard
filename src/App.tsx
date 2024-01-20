@@ -2,9 +2,10 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import WeatherCard from './components/WeatherCard'
 import WeatherIcon from './components/WeatherIcon'
-import type { WeatherData } from './types/weather-types'
+import type { TimeOfDay, WeatherData } from './types/weather-types'
 import Loader from './components/Loader'
 import Error from './components/Error'
+import TimeOfDayIcon from './components/TimeOfDayIcon'
 
 export default function App() {
 	const [data, setData] = useState<WeatherData | null>(null)
@@ -46,6 +47,21 @@ export default function App() {
 		return () => clearInterval(timer)
 	}, [])
 
+	const sunriseTime = new Date(data?.sys.sunrise * 1000)
+	const sunsetTime = new Date(data?.sys.sunset * 1000)
+	// Set nightTime to 22:00 of the same day as currentTime
+	const nightTime = new Date(currentTime)
+	nightTime.setHours(22, 0, 0, 0)
+
+	let timeOfDay: TimeOfDay
+	if (currentTime >= nightTime || currentTime < sunriseTime) {
+		timeOfDay = 'Night'
+	} else if (currentTime >= sunriseTime && currentTime < sunsetTime) {
+		timeOfDay = 'Day'
+	} else {
+		timeOfDay = 'Evening'
+	}
+
 	return (
 		<div className="App">
 			{error ? (
@@ -54,6 +70,9 @@ export default function App() {
 				<div className="dashboard_container">
 					<WeatherCard weatherData={data} currentTime={currentTime} />
 					<WeatherIcon weatherCondition={data.weather[0].main} />
+					<div className="time-of-day-icon">
+						<TimeOfDayIcon timeOfDay={timeOfDay} />
+					</div>
 				</div>
 			) : (
 				<Loader />
