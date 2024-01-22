@@ -11,22 +11,34 @@ export default function App() {
 	const [data, setData] = useState<WeatherData | null>(null)
 	const [error, setError] = useState<string | null>(null)
 	const [currentTime, setCurrentTime] = useState(new Date())
+	const [lat, setLat] = useState<number | null>(null)
+	const [long, setLong] = useState<number | null>(null)
 
-	const phoenixCoords = `${import.meta.env.VITE_REACT_APP_API_URL}/weather/?lat=33.4484&lon=-112.0740&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			setLat(position.coords.latitude)
+			setLong(position.coords.longitude)
+		})
+	}, [])
 
-	// OpenWeatherMap API docs:  @see https://openweathermap.org/api
 	useEffect(() => {
 		const fetchData = async () => {
-			try {
-				const response = await fetch(phoenixCoords)
-				if (!response.ok) {
-					throw { message: `Error: ${response.status}` }
+			if (lat !== null && long !== null) {
+				// Phoenix, AZ coordinates (hard-coded for now - will revert if needed)
+				// const phoenixCoords = `${import.meta.env.VITE_REACT_APP_API_URL}/weather/?lat=33.4484&lon=-112.0740&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+
+				const currentCoords = `${import.meta.env.VITE_REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+				try {
+					const response = await fetch(currentCoords)
+					if (!response.ok) {
+						throw { message: `Error: ${response.status}` }
+					}
+					const result = await response.json()
+					setData(result)
+				} catch (err) {
+					setError(err.message)
+					console.error(err)
 				}
-				const result = await response.json()
-				setData(result)
-			} catch (err) {
-				setError(err.message)
-				console.error(err)
 			}
 		}
 
@@ -36,7 +48,7 @@ export default function App() {
 			console.log('Fetched data 🌦️')
 		}, 300000) // run fetchData every 5 minutes
 		return () => clearInterval(interval)
-	}, [phoenixCoords])
+	}, [lat, long])
 
 	// Update the current time every second
 	useEffect(() => {
@@ -47,19 +59,20 @@ export default function App() {
 		return () => clearInterval(timer)
 	}, [])
 
-	const sunriseTime = new Date(data?.sys.sunrise * 1000)
-	const sunsetTime = new Date(data?.sys.sunset * 1000)
-	// Set nightTime to 22:00 of the same day as currentTime
-	const nightTime = new Date(currentTime)
-	nightTime.setHours(22, 0, 0, 0)
-
 	let timeOfDay: TimeOfDay
-	if (currentTime >= nightTime || currentTime < sunriseTime) {
-		timeOfDay = 'Night'
-	} else if (currentTime >= sunriseTime && currentTime < sunsetTime) {
-		timeOfDay = 'Day'
-	} else {
-		timeOfDay = 'Evening'
+	if (data) {
+		const sunriseTime = new Date(data.sys.sunrise * 1000)
+		const sunsetTime = new Date(data.sys.sunset * 1000)
+		const nightTime = new Date(currentTime)
+		nightTime.setHours(22, 0, 0, 0)
+
+		if (currentTime >= nightTime || currentTime < sunriseTime) {
+			timeOfDay = 'Night'
+		} else if (currentTime >= sunriseTime && currentTime < sunsetTime) {
+			timeOfDay = 'Day'
+		} else {
+			timeOfDay = 'Evening'
+		}
 	}
 
 	return (
