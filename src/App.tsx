@@ -64,7 +64,7 @@ export default function App() {
 		const sunriseTime = new Date(data.sys.sunrise * 1000)
 		const sunsetTime = new Date(data.sys.sunset * 1000)
 		const nightTime = new Date(currentTime)
-		nightTime.setHours(22, 0, 0, 0)
+		nightTime.setHours(24, 0, 0, 0)
 
 		if (currentTime >= nightTime || currentTime < sunriseTime) {
 			timeOfDay = 'Night'

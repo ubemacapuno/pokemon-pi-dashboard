@@ -19,6 +19,7 @@
 	width: 100%;
 	padding: var(--gap_largest);
 	gap: var(--gap_largest);
+	max-width: var(--max_width);
 }
 
 .time-of-day-icon {

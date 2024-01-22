@@ -16,15 +16,16 @@ export default function WeatherCard({ weatherData, currentTime }: WeatherCardPro
 			</div>
 
 			<span>{moment(currentTime).format('ddd, MMMM D')}</span>
-
-			<h2>{weatherData.name}</h2>
-			<div className="details_container">
-				<p>{tempInFahrenheit.toFixed(0)} &deg;</p>
-				<p>{toTitleCase(weatherData.weather[0].description)}</p>
-			</div>
-			<div className="max_min_temp_container">
-				<p className="max_temp">↑{maxTempInFahrenheit.toFixed(0)} &deg;</p>
-				<p className="min_temp">↓{minTempInFahrenheit.toFixed(0)} &deg;</p>
+			<div className="weather_info_container">
+				<h2>{weatherData.name}</h2>
+				<div className="details_container">
+					<h3>{tempInFahrenheit.toFixed(0)}&deg;</h3>
+					<p>{toTitleCase(weatherData.weather[0].description)}</p>
+				</div>
+				<div className="max_min_temp_container">
+					<p className="max_temp">↑{maxTempInFahrenheit.toFixed(0)}&deg;</p>
+					<p className="min_temp">↓{minTempInFahrenheit.toFixed(0)}&deg;</p>
+				</div>
 			</div>
 		</div>
 	)

@@ -1,25 +1,23 @@
 h2 {
-	color: var(--teal);
 	font-size: var(--font_xxlarge);
+}
+
+h3 {
+	font-size: var(--font_large);
 }
 
 .details_container {
 	font-size: var(--font_small);
 }
 
+.weather_info_container {
+	word-break: break-word;
+}
+
 .max_min_temp_container {
 	display: flex;
-	color: var(--subtext_color);
-	font-size: var(--font_small);
+	font-size: var(--font_smallest);
 	gap: var(--gap_small);
-}
-
-.max_temp {
-	color: var(--orange);
-}
-
-.min_temp {
-	color: var(--blue);
 }
 
 .clock_container {
