@@ -40,7 +40,6 @@ export default function App() {
 						throw { message: `Error: ${response.status}` }
 					}
 					const result = await response.json()
-					console.log('RESULT: ', result)
 					setData(result)
 				} catch (err) {
 					setError(err.message)
