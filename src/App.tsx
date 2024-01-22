@@ -40,6 +40,7 @@ export default function App() {
 						throw { message: `Error: ${response.status}` }
 					}
 					const result = await response.json()
+					// console.log('RESULT: ', result)
 					setData(result)
 				} catch (err) {
 					setError(err.message)
@@ -51,7 +52,7 @@ export default function App() {
 		fetchData()
 		const interval = setInterval(() => {
 			fetchData()
-			console.log('Fetched data 🌦️')
+			// console.log('Fetched data 🌦️')
 		}, 300000) // run fetchData every 5 minutes
 		return () => clearInterval(interval)
 	}, [lat, long])
