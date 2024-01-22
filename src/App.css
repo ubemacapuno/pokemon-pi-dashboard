@@ -14,12 +14,39 @@
 	align-items: center;
 	justify-items: stretch;
 	position: relative;
-	border: 3px solid var(--line_color);
-	border-radius: var(--border_radius);
 	width: 100%;
 	padding: var(--gap_largest);
 	gap: var(--gap_largest);
 	max-width: var(--max_width);
+	border: 0.75rem solid var(--line_color);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Media query for when the viewport width is less than var(--max_width) */
+@media (max-width: 800px) {
+	.dashboard_container {
+		display: block; /* Switch from grid to block layout so WeatherIcon stacks on bottom */
+	}
+}
+
+.dashboard_container::before,
+.dashboard_container::after {
+	content: '';
+	position: absolute;
+	width: 4rem;
+	height: 4rem;
+	background: var(--line_color);
+}
+
+.dashboard_container::before {
+	top: -2rem; /* Half of the box size to position it half outside */
+	left: -2rem;
+}
+
+.dashboard_container::after {
+	bottom: -2rem;
+	right: -2rem;
 }
 
 .time-of-day-icon {

@@ -15,10 +15,16 @@ export default function App() {
 	const [long, setLong] = useState<number | null>(null)
 
 	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			setLat(position.coords.latitude)
-			setLong(position.coords.longitude)
-		})
+		navigator.geolocation.getCurrentPosition(
+			function (position) {
+				setLat(position.coords.latitude)
+				setLong(position.coords.longitude)
+			},
+			function (error) {
+				console.error('Geolocation Error: ', error)
+				setError(error.message)
+			}
+		)
 	}, [])
 
 	useEffect(() => {
@@ -34,6 +40,7 @@ export default function App() {
 						throw { message: `Error: ${response.status}` }
 					}
 					const result = await response.json()
+					console.log('RESULT: ', result)
 					setData(result)
 				} catch (err) {
 					setError(err.message)
