@@ -18,7 +18,8 @@ const castformImages = {
 	Sand: '/weather_images/sand.gif',
 	Ash: '/weather_images/ash.gif',
 	Squall: '/weather_images/squall.gif',
-	Tornado: '/weather_images/squall.gif'
+	Tornado: '/weather_images/squall.gif',
+	Fog: '/weather_images/clouds.gif'
 }
 
 export default function WeatherIcon({ weatherCondition }) {
