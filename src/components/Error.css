@@ -6,3 +6,10 @@
 	padding: var(--gap_largest);
 	gap: var(--gap);
 }
+
+.error_container button {
+	padding: var(--gap_small);
+	background-color: var(--primary_color);
+	color: white;
+	cursor: pointer;
+}

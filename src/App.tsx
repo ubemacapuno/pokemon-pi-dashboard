@@ -110,7 +110,7 @@ export default function App() {
 										setZipCode(value)
 									}
 								}}
-								placeholder="Enter 5-digit Zip"
+								placeholder="5-digit Zip"
 								maxLength={5} // Set maxLength as a number without quotes
 							/>
 							<button type="submit">Get Weather</button>
