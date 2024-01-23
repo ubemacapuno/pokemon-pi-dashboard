@@ -5,13 +5,20 @@
 
 .weather-icon-container {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	height: 100%;
 	position: relative;
 	z-index: 2;
+	min-width: 250px;
 }
 
 img {
 	width: 80%;
+}
+
+@media (max-width: 600px) {
+	.weather-icon-container {
+		justify-content: center;
+	}
 }

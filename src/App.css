@@ -52,7 +52,7 @@
 }
 
 /* Media query for when the viewport width is less than var(--max_width) */
-@media (max-width: 800px) {
+@media (max-width: 600px) {
 	.dashboard_container {
 		display: block; /* Switch from grid to block layout so WeatherIcon stacks on bottom */
 	}
