@@ -26,9 +26,11 @@
 	right: 60px;
 	background: none;
 	border: none;
-	font-size: 1.5rem;
+	font-size: var(--font_xsmall);
 	cursor: pointer;
 	color: var(--red);
+	border: 1px solid var(--red);
+	padding: var(--gap_xsmall);
 }
 
 .modal_body {

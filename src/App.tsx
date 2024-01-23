@@ -46,7 +46,19 @@ export default function App() {
 	const handleZipCodeSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		fetchWeather(zipCode)
+		localStorage.setItem('zipCode', zipCode) // Save the zip code to localStorage
 	}
+
+	// Effect to load the zip code from localStorage when the component mounts
+	useEffect(() => {
+		const savedZipCode = localStorage.getItem('zipCode')
+		if (savedZipCode) {
+			setZipCode(savedZipCode)
+			fetchWeather(savedZipCode) // Fetch weather for the saved zip code
+		} else {
+			setShowModal(true) // Show modal if no zip code is saved
+		}
+	}, [])
 
 	useEffect(() => {
 		const timer = setInterval(() => {

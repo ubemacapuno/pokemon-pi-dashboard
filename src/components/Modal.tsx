@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({
 			<div className="modal_content">
 				{isCloseButtonShowing && (
 					<button className="modal_close" onClick={handleClose}>
-						✕
+						Close
 					</button>
 				)}
 				<div className="modal_body">{children}</div>
