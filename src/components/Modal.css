@@ -22,12 +22,13 @@
 
 .modal_close {
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: -30px;
+	right: 60px;
 	background: none;
 	border: none;
 	font-size: 1.5rem;
 	cursor: pointer;
+	color: var(--red);
 }
 
 .modal_body {
@@ -45,9 +46,7 @@ input[type='text'] {
 }
 
 button[type='submit'] {
-	padding: 10px 20px;
-	border-radius: 4px;
-	border: none;
+	padding: var(--gap_small);
 	background-color: var(--primary_color);
 	color: white;
 	cursor: pointer;
