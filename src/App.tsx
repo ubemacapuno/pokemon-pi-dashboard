@@ -14,8 +14,10 @@ export default function App() {
 	const [currentTime, setCurrentTime] = useState(new Date())
 	const [zipCode, setZipCode] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
-	// Use useState for modal visibility
+	// State modal visibility
 	const [showModal, setShowModal] = useState(true)
+	// State to track if fetch has occurred - For example, on first page visit, we don't want the modal to be able to be closed until a fetch has occurred
+	const [hasFetched, setHasFetched] = useState(false)
 
 	const fetchWeather = async (zip: string) => {
 		setIsLoading(true) // Start loading
@@ -27,14 +29,14 @@ export default function App() {
 			}
 			const weatherData = await response.json()
 			setData(weatherData)
-			setError(null) // Clear any previous errors
+			setHasFetched(true) // Set hasFetched to true after successful fetch
 			setIsLoading(false)
 			setShowModal(false)
 		} catch (error) {
 			setError('Failed to fetch weather data')
 			console.error(error)
-			setIsLoading(false) // Stop loading on error
-			setShowModal(false) // Close modal on error
+			setIsLoading(false)
+			setHasFetched(true) // Also set to true on error, since a fetch attempt was made
 		}
 	}
 
@@ -47,6 +49,13 @@ export default function App() {
 		e.preventDefault()
 		fetchWeather(zipCode)
 		localStorage.setItem('zipCode', zipCode) // Save the zip code to localStorage
+	}
+
+	// Prevent Modal from closing if fetch hasn't happened
+	const handleCloseModal = () => {
+		if (hasFetched) {
+			setShowModal(false)
+		}
 	}
 
 	// Effect to load the zip code from localStorage when the component mounts
@@ -87,10 +96,7 @@ export default function App() {
 	return (
 		<div className="App">
 			{showModal && (
-				<Modal
-					onClose={() => setShowModal(false)}
-					isCloseButtonShowing={data !== null || error !== null}
-				>
+				<Modal onClose={handleCloseModal} isCloseButtonShowing={data !== null || error !== null}>
 					<div className="form_wrapper">
 						<h3>Enter Zip Code</h3>
 						<form onSubmit={handleZipCodeSubmit}>
