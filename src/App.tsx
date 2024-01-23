@@ -1,71 +1,59 @@
+import { useState, useEffect } from 'react'
 import './App.css'
-import { useEffect, useState } from 'react'
 import WeatherCard from './components/WeatherCard'
 import WeatherIcon from './components/WeatherIcon'
-import type { TimeOfDay, WeatherData } from './types/weather-types'
 import Loader from './components/Loader'
 import Error from './components/Error'
 import TimeOfDayIcon from './components/TimeOfDayIcon'
+import type { WeatherData, TimeOfDay } from './types/weather-types'
+import Modal from './components/Modal'
 
 export default function App() {
 	const [data, setData] = useState<WeatherData | null>(null)
 	const [error, setError] = useState<string | null>(null)
 	const [currentTime, setCurrentTime] = useState(new Date())
-	const [lat, setLat] = useState<number | null>(null)
-	const [long, setLong] = useState<number | null>(null)
+	const [zipCode, setZipCode] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
+	// Use useState for modal visibility
+	const [showModal, setShowModal] = useState(true)
 
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(
-			function (position) {
-				setLat(position.coords.latitude)
-				setLong(position.coords.longitude)
-			},
-			function (error) {
-				console.error('Geolocation Error: ', error)
-				setError(error.message)
+	const fetchWeather = async (zip: string) => {
+		setIsLoading(true) // Start loading
+		try {
+			const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL}/weather?zip=${zip},us&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+			const response = await fetch(apiUrl)
+			if (!response.ok) {
+				throw { message: `Error: ${response.status}` }
 			}
-		)
-	}, [])
-
-	useEffect(() => {
-		const fetchData = async () => {
-			if (lat !== null && long !== null) {
-				// Phoenix, AZ coordinates (hard-coded for now - will revert if needed)
-				// const phoenixCoords = `${import.meta.env.VITE_REACT_APP_API_URL}/weather/?lat=33.4484&lon=-112.0740&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
-
-				const currentCoords = `${import.meta.env.VITE_REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
-				try {
-					const response = await fetch(currentCoords)
-					if (!response.ok) {
-						throw { message: `Error: ${response.status}` }
-					}
-					const result = await response.json()
-					// console.log('RESULT: ', result)
-					setData(result)
-				} catch (err) {
-					setError(err.message)
-					console.error(err)
-				}
-			}
+			const weatherData = await response.json()
+			setData(weatherData)
+			setIsLoading(false)
+			setShowModal(false)
+		} catch (error) {
+			setError('Failed to fetch weather data')
+			console.error(error)
+			setIsLoading(false) // Stop loading on error
 		}
+	}
 
-		fetchData()
-		const interval = setInterval(() => {
-			fetchData()
-			// console.log('Fetched data 🌦️')
-		}, 300000) // run fetchData every 5 minutes
-		return () => clearInterval(interval)
-	}, [lat, long])
+	// Function to toggle modal visibility
+	const toggleModal = shouldShow => {
+		setShowModal(shouldShow)
+	}
 
-	// Update the current time every second
+	const handleZipCodeSubmit = (e: { preventDefault: () => void }) => {
+		e.preventDefault()
+		fetchWeather(zipCode)
+	}
+
 	useEffect(() => {
 		const timer = setInterval(() => {
 			setCurrentTime(new Date())
 		}, 1000)
-
 		return () => clearInterval(timer)
 	}, [])
 
+	// Time of Day Logic
 	let timeOfDay: TimeOfDay
 	if (data) {
 		const sunriseTime = new Date(data.sys.sunrise * 1000)
@@ -84,19 +72,39 @@ export default function App() {
 
 	return (
 		<div className="App">
+			{showModal && (
+				<Modal onClose={() => setShowModal(false)}>
+					<form onSubmit={handleZipCodeSubmit}>
+						<input
+							type="text"
+							value={zipCode}
+							onChange={e => {
+								// Allow only numbers and limit to 5 characters
+								const value = e.target.value
+								if (value === '' || (/^\d+$/.test(value) && value.length <= 5)) {
+									setZipCode(value)
+								}
+							}}
+							placeholder="Enter 5-digit Zip Code"
+							maxLength={5} // Set maxLength as a number without quotes
+						/>
+						<button type="submit">Get Weather</button>
+					</form>
+				</Modal>
+			)}
 			{error ? (
 				<Error errorMessage={error} title="Error Fetching Weather Data" />
+			) : isLoading ? (
+				<Loader />
 			) : data && data.main ? (
 				<div className="dashboard_container">
-					<WeatherCard weatherData={data} currentTime={currentTime} />
+					<WeatherCard weatherData={data} currentTime={currentTime} toggleModal={toggleModal} />
 					<WeatherIcon weatherCondition={data.weather[0].main} />
-					<div className="time-of-day-icon">
+					<div className="time_of_day_icon">
 						<TimeOfDayIcon timeOfDay={timeOfDay} />
-					</div>
+					</div>{' '}
 				</div>
-			) : (
-				<Loader />
-			)}
+			) : null}
 		</div>
 	)
 }

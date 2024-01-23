@@ -28,6 +28,14 @@
 	.dashboard_container {
 		display: block; /* Switch from grid to block layout so WeatherIcon stacks on bottom */
 	}
+
+	.time_of_day_icon {
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(-50%, 300%);
+		z-index: 0;
+	}
 }
 
 .dashboard_container::before,
@@ -49,7 +57,7 @@
 	right: -2rem;
 }
 
-.time-of-day-icon {
+.time_of_day_icon {
 	position: absolute;
 	top: 1.2rem;
 	right: 1.2rem;

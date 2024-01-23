@@ -30,3 +30,13 @@ h3 {
 	font-size: var(--font_huge);
 	text-align: left;
 }
+
+@media (max-width: 420px) {
+	.clock_container h1 {
+		font-size: var(--font_xlarge);
+	}
+
+	h2 {
+		font-size: var(--font_large);
+	}
+}
