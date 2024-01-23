@@ -2,8 +2,9 @@ h2 {
 	font-size: var(--font_xxlarge);
 }
 
-h3 {
+.details_container h3 {
 	font-size: var(--font_large);
+	margin-bottom: var(--gap);
 }
 
 .details_container {
@@ -29,4 +30,14 @@ h3 {
 	margin-right: var(--gap_small);
 	font-size: var(--font_huge);
 	text-align: left;
+}
+
+@media (max-width: 420px) {
+	.clock_container h1 {
+		font-size: var(--font_xxlarge);
+	}
+
+	h2 {
+		font-size: var(--font_large);
+	}
 }

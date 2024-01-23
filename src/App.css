@@ -8,6 +8,34 @@
 	padding: var(--gap_small);
 }
 
+.App .form_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: var(--gap_small);
+	height: 200px;
+	background-color: var(--sheet_color);
+	padding: var(--gap);
+}
+
+.App input {
+	font-size: var(--font_small);
+	padding: var(--gap_small);
+	border: 0.25rem solid var(--line_color);
+	border-radius: 0.5rem;
+	background-color: var(--bg_color);
+	color: var(--text_color);
+}
+
+.App form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: var(--gap_small);
+}
+
 .dashboard_container {
 	display: grid;
 	grid-template-columns: 1fr 2fr;
@@ -27,6 +55,14 @@
 @media (max-width: 800px) {
 	.dashboard_container {
 		display: block; /* Switch from grid to block layout so WeatherIcon stacks on bottom */
+	}
+
+	.time_of_day_icon {
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(-50%, 300%);
+		z-index: 0;
 	}
 }
 
@@ -49,7 +85,7 @@
 	right: -2rem;
 }
 
-.time-of-day-icon {
+.time_of_day_icon {
 	position: absolute;
 	top: 1.2rem;
 	right: 1.2rem;

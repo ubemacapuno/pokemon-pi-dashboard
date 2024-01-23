@@ -7,6 +7,7 @@ const castformImages = {
 	Thunderstorm: '/weather_images/thunderstorm.gif',
 	Drizzle: '/weather_images/rain.gif',
 	Rain: '/weather_images/rain.gif',
+	Mist: '/weather_images/rain.gif',
 	Snow: '/weather_images/snow.gif',
 	Clear: '/weather_images/clear.gif',
 	Clouds: '/weather_images/clouds.gif',

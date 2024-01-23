@@ -10,7 +10,7 @@ const timeOfDayImages = {
 const TimeOfDayIcon: React.FC<TimeOfDayIconProps> = ({ timeOfDay }) => {
 	const timeOfDayIcon = timeOfDayImages[timeOfDay as keyof typeof timeOfDayImages]
 
-	return <img src={timeOfDayIcon} alt="Time of day icon" style={{ width: '2.5rem' }} />
+	return <img src={timeOfDayIcon} alt="Time of day icon" style={{ width: '3rem' }} />
 }
 
 export default TimeOfDayIcon

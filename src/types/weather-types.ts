@@ -25,4 +25,5 @@ export type TimeOfDayIconProps = {
 export type WeatherCardProps = {
 	weatherData: WeatherData
 	currentTime: Date
+	toggleModal: (show: boolean) => void
 }
