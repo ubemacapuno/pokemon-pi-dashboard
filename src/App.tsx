@@ -13,7 +13,7 @@ export default function App() {
 	const [error, setError] = useState<string | null>(null)
 	const [currentTime, setCurrentTime] = useState(new Date())
 	const [zipCode, setZipCode] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
+	const [isLoading, setIsLoading] = useState(true)
 	// State modal visibility
 	const [showModal, setShowModal] = useState(true)
 	// State to track if fetch has occurred - For example, on first page visit, we don't want the modal to be able to be closed until a fetch has occurred
@@ -67,6 +67,7 @@ export default function App() {
 			setZipCode(savedZipCode)
 			fetchWeather(savedZipCode) // Fetch weather for the saved zip code
 		} else {
+			setIsLoading(false) // If no zip code, stop loading and show modal
 			setShowModal(true) // Show modal if no zip code is saved
 		}
 	}, [])
@@ -97,42 +98,55 @@ export default function App() {
 
 	return (
 		<div className="App">
-			{showModal && (
-				<Modal onClose={handleCloseModal} isCloseButtonShowing={data !== null || error !== null}>
-					<div className="form_wrapper">
-						<h3>Enter Zip Code</h3>
-						<form onSubmit={handleZipCodeSubmit}>
-							<input
-								type="text"
-								value={zipCode}
-								onChange={e => {
-									// Allow only numbers and limit to 5 characters
-									const value = e.target.value
-									if (value === '' || (/^\d+$/.test(value) && value.length <= 5)) {
-										setZipCode(value)
-									}
-								}}
-								placeholder="5-digit Zip"
-								maxLength={5} // Set maxLength as a number without quotes
-							/>
-							<button type="submit">Get Weather</button>
-						</form>
-					</div>
-				</Modal>
-			)}
-			{error ? (
-				<Error errorMessage={error} title="Error Fetching Weather Data" toggleModal={toggleModal} />
-			) : isLoading ? (
+			{isLoading ? (
 				<Loader />
-			) : data && data.main ? (
-				<div className="dashboard_container">
-					<WeatherCard weatherData={data} currentTime={currentTime} toggleModal={toggleModal} />
-					<WeatherIcon weatherCondition={data.weather[0].main} />
-					<div className="time_of_day_icon">
-						<TimeOfDayIcon timeOfDay={timeOfDay} />
-					</div>{' '}
-				</div>
-			) : null}
+			) : (
+				<>
+					{showModal && (
+						<Modal
+							onClose={() => setShowModal(false)}
+							isCloseButtonShowing={data !== null || error !== null}
+						>
+							<div className="form_wrapper">
+								<h3>Enter Zip Code</h3>
+								<form onSubmit={handleZipCodeSubmit}>
+									<input
+										type="text"
+										value={zipCode}
+										onChange={e => {
+											// Allow only numbers and limit to 5 characters
+											const value = e.target.value
+											if (value === '' || (/^\d+$/.test(value) && value.length <= 5)) {
+												setZipCode(value)
+											}
+										}}
+										placeholder="5-digit Zip"
+										maxLength={5} // Set maxLength as a number without quotes
+									/>
+									<button type="submit">Get Weather</button>
+								</form>
+							</div>
+						</Modal>
+					)}
+					{error ? (
+						<Error
+							errorMessage={error}
+							title="Error Fetching Weather Data"
+							toggleModal={toggleModal}
+						/>
+					) : isLoading ? (
+						<Loader />
+					) : data && data.main ? (
+						<div className="dashboard_container">
+							<WeatherCard weatherData={data} currentTime={currentTime} toggleModal={toggleModal} />
+							<WeatherIcon weatherCondition={data.weather[0].main} />
+							<div className="time_of_day_icon">
+								<TimeOfDayIcon timeOfDay={timeOfDay} />
+							</div>{' '}
+						</div>
+					) : null}
+				</>
+			)}
 		</div>
 	)
 }
