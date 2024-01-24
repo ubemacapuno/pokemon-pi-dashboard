@@ -32,7 +32,9 @@ export default function App() {
 			setHasFetched(true) // Set hasFetched to true after successful fetch
 			setIsLoading(false)
 			setShowModal(false)
+			setError(null) // reset error state
 		} catch (error) {
+			setShowModal(false) // close modal so user can see error
 			setError('Failed to fetch weather data')
 			console.error(error)
 			setIsLoading(false)
