@@ -7,6 +7,13 @@ const WeatherCardContainer = styled.div`
 	position: relative;
 	z-index: 10;
 `
+const H2 = styled.h2`
+	font-size: var(--font_xxlarge);
+
+	@media (max-width: 420px) {
+		font-size: var(--font_large);
+	}
+`
 const ClockContainer = styled.div`
 	display: flex;
 	align-items: center;
@@ -69,7 +76,7 @@ export default function WeatherCard({ weatherData, currentTime, toggleModal }: W
 
 			<WeatherInfoContainer>
 				<button onClick={() => toggleModal(true)}>
-					<h2>{weatherData.name}</h2>
+					<H2>{weatherData.name}</H2>
 				</button>
 
 				<WeatherDetails>
