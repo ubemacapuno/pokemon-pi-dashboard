@@ -32,7 +32,7 @@ const WeatherIconContainer = styled.div<WeatherIconContainerProps>`
 	position: relative;
 	z-index: 2;
 	min-width: 250px;
-	transition: transform 0.7s;
+	transition: transform 0.3s;
 
 	${({ $isFlipped }) =>
 		$isFlipped &&
@@ -49,7 +49,7 @@ const WeatherIconContainer = styled.div<WeatherIconContainerProps>`
 
 const WeatherImage = styled.img`
 	width: 80%;
-	transition: transform 0.7s;
+	transition: transform 0.3s;
 `
 
 export default function WeatherIcon({ weatherCondition }) {
