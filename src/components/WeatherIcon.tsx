@@ -2,6 +2,7 @@
 // TODO: Render via the description instead ? @see https://openweathermap.org/weather-conditions
 
 import './WeatherIcon.css'
+import { useState, useEffect } from 'react'
 
 const castformImages = {
 	Thunderstorm: '/weather_images/thunderstorm.gif',
@@ -24,9 +25,18 @@ const castformImages = {
 
 export default function WeatherIcon({ weatherCondition }) {
 	const weatherIcon = castformImages[weatherCondition] || castformImages.Default
+	const [isFlipped, setIsFlipped] = useState(false)
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setIsFlipped(prev => !prev) // Toggle the flipped state
+		}, 12000) // every 12 seconds
+
+		return () => clearInterval(interval)
+	}, [])
 
 	return (
-		<div className="weather-icon-container">
+		<div className={`weather-icon-container ${isFlipped ? 'flipped' : ''}`}>
 			<img src={weatherIcon} alt="Weather icon" />
 		</div>
 	)
