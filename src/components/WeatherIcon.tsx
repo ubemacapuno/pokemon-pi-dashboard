@@ -1,7 +1,3 @@
-// Paths to Castform images in src/assets/weather_images
-// TODO: Render via the description instead ? @see https://openweathermap.org/weather-conditions
-
-// import './WeatherIcon.css'
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
 
