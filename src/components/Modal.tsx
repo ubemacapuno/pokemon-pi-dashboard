@@ -1,5 +1,46 @@
 import React, { useEffect } from 'react'
-import './Modal.css'
+import styled from 'styled-components'
+
+const ModalContainer = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 999;
+`
+const ModalContent = styled.div`
+	position: relative;
+	padding: 20px;
+	background-color: var(--background_color);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	width: var(--max_width);
+`
+
+const ModalClose = styled.button`
+	position: absolute;
+	top: -30px;
+	right: 60px;
+	background: none;
+	border: none;
+	font-size: var(--font_xsmall);
+	cursor: pointer;
+	color: var(--red);
+	border: 1px solid var(--red);
+	padding: var(--gap_xsmall);
+`
+
+const ModalBody = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--gap_small);
+`
 
 interface ModalProps {
 	onClose: () => void
@@ -39,16 +80,12 @@ const Modal: React.FC<ModalProps> = ({
 	}, [])
 
 	return (
-		<div className="modal_container" onMouseDown={handleClickOutside}>
-			<div className="modal_content">
-				{isCloseButtonShowing && (
-					<button className="modal_close" onClick={handleClose}>
-						Close
-					</button>
-				)}
-				<div className="modal_body">{children}</div>
-			</div>
-		</div>
+		<ModalContainer onMouseDown={handleClickOutside}>
+			<ModalContent>
+				{isCloseButtonShowing && <ModalClose onClick={handleClose}>Close</ModalClose>}
+				<ModalBody>{children}</ModalBody>
+			</ModalContent>
+		</ModalContainer>
 	)
 }
 

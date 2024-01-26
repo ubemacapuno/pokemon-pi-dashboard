@@ -1,8 +1,65 @@
 import moment from 'moment'
-import './WeatherCard.css'
+import styled from 'styled-components'
 import { convertCelsiusToFahrenheit, toTitleCase } from '../utils/helpers'
 import { WeatherCardProps } from '../types/weather-types'
 
+const WeatherCardContainer = styled.div`
+	position: relative;
+	z-index: 10;
+`
+const H2 = styled.h2`
+	font-size: var(--font_xxlarge);
+
+	@media (max-width: 420px) {
+		font-size: var(--font_large);
+	}
+`
+const ClockContainer = styled.div`
+	display: flex;
+	align-items: center;
+
+	h1 {
+		margin-right: var(--gap_small);
+		font-size: var(--font_huge);
+		text-align: left;
+	}
+
+	@media (max-width: 420px) {
+		h1 {
+			font-size: var(--font_xxlarge);
+		}
+	}
+`
+const Clock = styled.h1`
+	margin-right: var(--gap_small);
+	font-size: var(--font_huge);
+	text-align: left;
+
+	@media (max-width: 420px) {
+		font-size: var(--font_xxlarge);
+	}
+`
+
+const WeatherInfoContainer = styled.div`
+	word-break: break-word;
+`
+
+const WeatherDetails = styled.div`
+	font-size: var(--font_small);
+
+	h3 {
+		font-size: var(--font_large);
+		margin-bottom: var(--gap);
+	}
+`
+
+const TempContainer = styled.div`
+	display: flex;
+	font-size: var(--font_smallest);
+	gap: var(--gap_small);
+`
+
+// WeatherCard component
 export default function WeatherCard({ weatherData, currentTime, toggleModal }: WeatherCardProps) {
 	const formattedTime = moment(currentTime).format('HH:mm')
 	const tempInFahrenheit = convertCelsiusToFahrenheit(weatherData.main.temp)
@@ -10,25 +67,28 @@ export default function WeatherCard({ weatherData, currentTime, toggleModal }: W
 	const minTempInFahrenheit = convertCelsiusToFahrenheit(weatherData.main.temp_min)
 
 	return (
-		<div className="weather_card_container">
-			<div className="clock_container">
-				<h1>{formattedTime}</h1>
-			</div>
+		<WeatherCardContainer>
+			<ClockContainer>
+				<Clock>{formattedTime}</Clock>
+			</ClockContainer>
 
 			<span>{moment(currentTime).format('ddd, MMMM D')}</span>
-			<div className="weather_info_container">
+
+			<WeatherInfoContainer>
 				<button onClick={() => toggleModal(true)}>
-					<h2>{weatherData.name}</h2>
+					<H2>{weatherData.name}</H2>
 				</button>
-				<div className="details_container">
+
+				<WeatherDetails>
 					<h3>{tempInFahrenheit.toFixed(0)}&deg;</h3>
 					<p>{toTitleCase(weatherData.weather[0].description)}</p>
-				</div>
-				<div className="max_min_temp_container">
-					<p className="max_temp">↑{maxTempInFahrenheit.toFixed(0)}&deg;</p>
-					<p className="min_temp">↓{minTempInFahrenheit.toFixed(0)}&deg;</p>
-				</div>
-			</div>
-		</div>
+				</WeatherDetails>
+
+				<TempContainer>
+					<p>↑{maxTempInFahrenheit.toFixed(0)}&deg;</p>
+					<p>↓{minTempInFahrenheit.toFixed(0)}&deg;</p>
+				</TempContainer>
+			</WeatherInfoContainer>
+		</WeatherCardContainer>
 	)
 }

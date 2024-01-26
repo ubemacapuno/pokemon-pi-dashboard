@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 import WeatherCard from './components/WeatherCard'
 import WeatherIcon from './components/WeatherIcon'
 import Loader from './components/Loader'
@@ -7,6 +6,99 @@ import Error from './components/Error'
 import TimeOfDayIcon from './components/TimeOfDayIcon'
 import type { WeatherData, TimeOfDay } from './types/weather-types'
 import Modal from './components/Modal'
+import styled from 'styled-components'
+
+const AppContainer = styled.div`
+	background-color: var(--bg_color);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: var(--gap_small);
+
+	input {
+		font-size: var(--font_small);
+		padding: var(--gap_small);
+		border: 0.25rem solid var(--line_color);
+		border-radius: 0.5rem;
+		background-color: var(--bg_color);
+		color: var(--text_color);
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: var(--gap_small);
+	}
+`
+const FormWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: var(--gap_small);
+	height: 200px;
+	background-color: var(--sheet_color);
+	padding: var(--gap);
+`
+const DashboardContainer = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	align-items: center;
+	justify-items: stretch;
+	position: relative;
+	width: 100%;
+	padding: var(--gap_largest);
+	gap: var(--gap_smallest);
+	max-width: var(--max_width);
+	border: 0.75rem solid var(--line_color);
+	position: relative;
+	overflow: hidden;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		width: 4rem;
+		height: 4rem;
+		background: var(--line_color);
+	}
+
+	&::before {
+		top: -2rem; // Half of the box size to position it half outside
+		left: -2rem;
+	}
+
+	&::after {
+		bottom: -2rem;
+		right: -2rem;
+	}
+
+	@media (max-width: 600px) {
+		display: block; /* Switch from grid to block layout so WeatherIcon stacks on bottom */
+	}
+`
+const TimeOfDayIconContainer = styled.div`
+	position: absolute;
+	top: 1.2rem;
+	right: 1.2rem;
+`
+const StyledInput = styled.input.attrs({ type: 'text' })`
+	padding: 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 100%;
+`
+
+const StyledButton = styled.button.attrs({ type: 'submit' })`
+	padding: var(--gap_small);
+	background-color: var(--primary_color);
+	color: white;
+	cursor: pointer;
+`
 
 export default function App() {
 	const [data, setData] = useState<WeatherData | null>(null)
@@ -97,7 +189,7 @@ export default function App() {
 	}
 
 	return (
-		<div className="App">
+		<AppContainer>
 			{isLoading ? (
 				<Loader />
 			) : (
@@ -107,11 +199,10 @@ export default function App() {
 							onClose={handleCloseModal}
 							isCloseButtonShowing={data !== null || error !== null}
 						>
-							<div className="form_wrapper">
+							<FormWrapper>
 								<h3>Enter Zip Code</h3>
 								<form onSubmit={handleZipCodeSubmit}>
-									<input
-										type="text"
+									<StyledInput
 										value={zipCode}
 										onChange={e => {
 											// Allow only numbers and limit to 5 characters
@@ -121,11 +212,11 @@ export default function App() {
 											}
 										}}
 										placeholder="5-digit Zip"
-										maxLength={5} // Set maxLength as a number without quotes
+										maxLength={5}
 									/>
-									<button type="submit">Get Weather</button>
+									<StyledButton>Get Weather</StyledButton>
 								</form>
-							</div>
+							</FormWrapper>
 						</Modal>
 					)}
 					{error ? (
@@ -137,16 +228,16 @@ export default function App() {
 					) : isLoading ? (
 						<Loader />
 					) : data && data.main ? (
-						<div className="dashboard_container">
+						<DashboardContainer>
 							<WeatherCard weatherData={data} currentTime={currentTime} toggleModal={toggleModal} />
 							<WeatherIcon weatherCondition={data.weather[0].main} />
-							<div className="time_of_day_icon">
+							<TimeOfDayIconContainer>
 								<TimeOfDayIcon timeOfDay={timeOfDay} />
-							</div>{' '}
-						</div>
+							</TimeOfDayIconContainer>{' '}
+						</DashboardContainer>
 					) : null}
 				</>
 			)}
-		</div>
+		</AppContainer>
 	)
 }
