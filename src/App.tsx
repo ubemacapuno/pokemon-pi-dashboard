@@ -200,7 +200,7 @@ export default function App() {
 							isCloseButtonShowing={data !== null || error !== null}
 						>
 							<FormWrapper>
-								<h3>Enter Zip Code</h3>
+								<h3>Enter US Zip Code</h3>
 								<form onSubmit={handleZipCodeSubmit}>
 									<StyledInput
 										value={zipCode}
@@ -211,7 +211,7 @@ export default function App() {
 												setZipCode(value)
 											}
 										}}
-										placeholder="5-digit Zip"
+										placeholder="5-digit US Zip"
 										maxLength={5}
 									/>
 									<StyledButton>Get Weather</StyledButton>

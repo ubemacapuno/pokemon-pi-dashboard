@@ -62,7 +62,6 @@ export default function WeatherIcon({ weatherCondition }) {
 			setIsFlipped(prev => !prev)
 
 			const randomTime = Math.random() * (12000 - 4000) + 4000 // Random time between 4 and 12 seconds
-			console.log('randomTime', randomTime)
 
 			// Clear the previous timeout
 			if (timeoutRef.current) {
