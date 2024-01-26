@@ -30,7 +30,7 @@ const Clock = styled.h1`
 	}
 `
 
-const WeatherInfoContainer = styled.span`
+const WeatherInfoContainer = styled.div`
 	word-break: break-word;
 `
 
@@ -47,16 +47,6 @@ const TempContainer = styled.div`
 	display: flex;
 	font-size: var(--font_smallest);
 	gap: var(--gap_small);
-`
-
-const Temp = styled.span`
-	&.max_temp {
-		color: var(--color_red);
-	}
-
-	&.min_temp {
-		color: var(--color_blue);
-	}
 `
 
 // WeatherCard component
@@ -85,8 +75,8 @@ export default function WeatherCard({ weatherData, currentTime, toggleModal }: W
 				</WeatherDetails>
 
 				<TempContainer>
-					<Temp className="max_temp">↑{maxTempInFahrenheit.toFixed(0)}&deg;</Temp>
-					<Temp className="min_temp">↓{minTempInFahrenheit.toFixed(0)}&deg;</Temp>
+					<p>↑{maxTempInFahrenheit.toFixed(0)}&deg;</p>
+					<p>↓{minTempInFahrenheit.toFixed(0)}&deg;</p>
 				</TempContainer>
 			</WeatherInfoContainer>
 		</div>

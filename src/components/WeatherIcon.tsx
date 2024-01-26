@@ -57,11 +57,16 @@ export default function WeatherIcon({ weatherCondition }) {
 	const [isFlipped, setIsFlipped] = useState(false)
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setIsFlipped(prev => !prev)
-		}, 12000)
+		const flipInterval = () => {
+			const randomTime = Math.random() * (12000 - 6000) + 6000 // Random time between 6 and 12 seconds
+			return randomTime
+		}
 
-		return () => clearInterval(interval)
+		const intervalId = setInterval(() => {
+			setIsFlipped(prev => !prev)
+		}, flipInterval())
+
+		return () => clearInterval(intervalId)
 	}, [])
 
 	return (

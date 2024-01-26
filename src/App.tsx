@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-// import './App.css'
 import WeatherCard from './components/WeatherCard'
 import WeatherIcon from './components/WeatherIcon'
 import Loader from './components/Loader'
@@ -36,7 +35,6 @@ const AppContainer = styled.div`
 	}
 `
 const FormWrapper = styled.div`
-{
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -45,8 +43,6 @@ const FormWrapper = styled.div`
 	height: 200px;
 	background-color: var(--sheet_color);
 	padding: var(--gap);
-}
-
 `
 const DashboardContainer = styled.div`
 	display: grid;
@@ -89,6 +85,19 @@ const TimeOfDayIconContainer = styled.div`
 	position: absolute;
 	top: 1.2rem;
 	right: 1.2rem;
+`
+const StyledInput = styled.input.attrs({ type: 'text' })`
+	padding: 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 100%;
+`
+
+const StyledButton = styled.button.attrs({ type: 'submit' })`
+	padding: var(--gap_small);
+	background-color: var(--primary_color);
+	color: white;
+	cursor: pointer;
 `
 
 export default function App() {
@@ -193,8 +202,7 @@ export default function App() {
 							<FormWrapper>
 								<h3>Enter Zip Code</h3>
 								<form onSubmit={handleZipCodeSubmit}>
-									<input
-										type="text"
+									<StyledInput
 										value={zipCode}
 										onChange={e => {
 											// Allow only numbers and limit to 5 characters
@@ -204,9 +212,9 @@ export default function App() {
 											}
 										}}
 										placeholder="5-digit Zip"
-										maxLength={5} // Set maxLength as a number without quotes
+										maxLength={5}
 									/>
-									<button type="submit">Get Weather</button>
+									<StyledButton>Get Weather</StyledButton>
 								</form>
 							</FormWrapper>
 						</Modal>
