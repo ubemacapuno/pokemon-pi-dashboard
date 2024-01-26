@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { convertCelsiusToFahrenheit, toTitleCase } from '../utils/helpers'
 import { WeatherCardProps } from '../types/weather-types'
 
+const WeatherCardContainer = styled.div`
+	position: relative;
+	z-index: 10;
+`
 const ClockContainer = styled.div`
 	display: flex;
 	align-items: center;
@@ -19,7 +23,6 @@ const ClockContainer = styled.div`
 		}
 	}
 `
-
 const Clock = styled.h1`
 	margin-right: var(--gap_small);
 	font-size: var(--font_huge);
@@ -57,7 +60,7 @@ export default function WeatherCard({ weatherData, currentTime, toggleModal }: W
 	const minTempInFahrenheit = convertCelsiusToFahrenheit(weatherData.main.temp_min)
 
 	return (
-		<div>
+		<WeatherCardContainer>
 			<ClockContainer>
 				<Clock>{formattedTime}</Clock>
 			</ClockContainer>
@@ -79,6 +82,6 @@ export default function WeatherCard({ weatherData, currentTime, toggleModal }: W
 					<p>↓{minTempInFahrenheit.toFixed(0)}&deg;</p>
 				</TempContainer>
 			</WeatherInfoContainer>
-		</div>
+		</WeatherCardContainer>
 	)
 }
