@@ -1,7 +1,8 @@
 // Paths to Castform images in src/assets/weather_images
 // TODO: Render via the description instead ? @see https://openweathermap.org/weather-conditions
 
-import './WeatherIcon.css'
+// import './WeatherIcon.css'
+import styled from 'styled-components'
 import { useState, useEffect } from 'react'
 
 const castformImages = {
@@ -23,21 +24,53 @@ const castformImages = {
 	Fog: '/weather_images/clouds.gif'
 }
 
+type WeatherIconContainerProps = {
+	$isFlipped: boolean
+}
+
+const WeatherIconContainer = styled.div<WeatherIconContainerProps>`
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100%;
+	position: relative;
+	z-index: 2;
+	min-width: 250px;
+	transition: transform 0.7s;
+
+	${({ $isFlipped }) =>
+		$isFlipped &&
+		`
+	img {
+			transform: scaleX(-1);
+	}
+`}
+
+	@media (max-width: 600px) {
+		justify-content: center;
+	}
+`
+
+const WeatherImage = styled.img`
+	width: 80%;
+	transition: transform 0.7s;
+`
+
 export default function WeatherIcon({ weatherCondition }) {
 	const weatherIcon = castformImages[weatherCondition] || castformImages.Default
 	const [isFlipped, setIsFlipped] = useState(false)
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setIsFlipped(prev => !prev) // Toggle the flipped state
-		}, 12000) // every 12 seconds
+			setIsFlipped(prev => !prev)
+		}, 12000)
 
 		return () => clearInterval(interval)
 	}, [])
 
 	return (
-		<div className={`weather-icon-container ${isFlipped ? 'flipped' : ''}`}>
-			<img src={weatherIcon} alt="Weather icon" />
-		</div>
+		<WeatherIconContainer $isFlipped={isFlipped}>
+			<WeatherImage src={weatherIcon} alt="Weather icon" />
+		</WeatherIconContainer>
 	)
 }
