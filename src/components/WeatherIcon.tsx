@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const castformImages = {
 	Thunderstorm: '/weather_images/thunderstorm.gif',
@@ -55,18 +55,33 @@ const WeatherImage = styled.img`
 export default function WeatherIcon({ weatherCondition }) {
 	const weatherIcon = castformImages[weatherCondition] || castformImages.Default
 	const [isFlipped, setIsFlipped] = useState(false)
+	const timeoutRef = useRef(null) // Ref to store the current timeout ID for image flipping
 
 	useEffect(() => {
-		const flipInterval = () => {
-			const randomTime = Math.random() * (12000 - 6000) + 6000 // Random time between 6 and 12 seconds
-			return randomTime
+		const flipImage = () => {
+			setIsFlipped(prev => !prev)
+
+			const randomTime = Math.random() * (12000 - 4000) + 4000 // Random time between 4 and 12 seconds
+			console.log('randomTime', randomTime)
+
+			// Clear the previous timeout
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current)
+			}
+
+			// Set a new timeout
+			timeoutRef.current = setTimeout(flipImage, randomTime)
 		}
 
-		const intervalId = setInterval(() => {
-			setIsFlipped(prev => !prev)
-		}, flipInterval())
+		// Start the first flip
+		flipImage()
 
-		return () => clearInterval(intervalId)
+		// Cleanup function to clear the timeout if the component unmounts
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current)
+			}
+		}
 	}, [])
 
 	return (
