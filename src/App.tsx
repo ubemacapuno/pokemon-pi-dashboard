@@ -114,7 +114,7 @@ export default function App() {
 	const fetchWeather = async (zip: string) => {
 		setIsLoading(true) // Start loading
 		try {
-			const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL}/weather?zip=${zip},us&units=metric&APPID=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+			const apiUrl = `/api/weather?zip=${zip}` // serverless endpoint
 			const response = await fetch(apiUrl)
 			if (!response.ok) {
 				throw { message: `Error: ${response.status}` }
