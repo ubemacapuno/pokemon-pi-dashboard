@@ -9,6 +9,7 @@ const WeatherCardContainer = styled.div`
 `
 const H2 = styled.h2`
 	font-size: var(--font_xxlarge);
+	text-align: left;
 
 	@media (max-width: 420px) {
 		font-size: var(--font_large);
