@@ -1,6 +1,10 @@
-// api/weather.ts
 import { VercelRequest, VercelResponse } from '@vercel/node'
 
+/**
+ * This is a serverless function that fetches weather data from the OpenWeatherMap API.
+ * This is needed because the OpenWeatherMap API requires an API key, which should not be exposed to the client.
+ * Vercel environment variables are used to store the API key securely, and Vercel supports serverless functions.
+ */
 export default async (req: VercelRequest, res: VercelResponse) => {
 	const { zip } = req.query
 	if (typeof zip !== 'string') {

@@ -213,6 +213,7 @@ export default function App() {
 										}}
 										placeholder="5-digit US Zip"
 										maxLength={5}
+										minLength={5}
 									/>
 									<StyledButton>Get Weather</StyledButton>
 								</form>
