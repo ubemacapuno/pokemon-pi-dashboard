@@ -6,13 +6,13 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
  * Vercel environment variables are used to store the API key securely, and Vercel supports serverless functions.
  */
 export default async (req: VercelRequest, res: VercelResponse) => {
-	const { zip } = req.query
+	const { zip } = req.query // Get the zip code from the query string
 	if (typeof zip !== 'string') {
 		return res.status(400).json({ error: 'Zip code is required as a string.' })
 	}
 
 	const apiKey = process.env.OPENWEATHERMAP_API_KEY // Server-side environment variable
-	const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=metric&APPID=${apiKey}`
+	const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=metric&APPID=${apiKey}` // OpenWeatherMap API endpoint
 
 	try {
 		const weatherResponse = await fetch(apiUrl)
