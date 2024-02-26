@@ -8,7 +8,7 @@ With the help of [Vercel Serverless Functions](https://vercel.com/docs/functions
 
  <tr>
     <td width="60%"  style="align:center;" valign="top">
-            <img src="https://coreydamocles.vercel.app/images/pokemon-pi-dashboard.jpg" width="60%"  alt="Svelte STEP Bro Raspberry Pi 5 Demo"/>
+            <img src="https://coreydamocles.vercel.app/images/pokemon-pi-dashboard.jpg" width="60%"  alt="Pokémon Pi Dashboard"/>
     </td>
   </tr>
 
